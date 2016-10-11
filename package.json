@@ -1,0 +1,46 @@
+{
+  "name": "floflo-react-menu",
+  "version": "1.0.0",
+  "description": "Some input components all styled and ready to use",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "example": "webpack --progress --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/florian-barbare/react-menu.git"
+  },
+  "keywords": [
+    "react",
+    "input",
+    "inputs",
+    "file",
+    "text",
+    "button",
+    "submit",
+    "textarea",
+    "toggle",
+    "select"
+  ],
+  "author": "Florian Barbare",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/florian-barbare/react-menu/issues"
+  },
+  "homepage": "https://github.com/florian-barbare/react-menu#readme",
+  "dependencies": {
+    "color": "^0.11.3",
+    "immutable": "^3.8.1",
+    "is-url": "^1.2.2",
+    "radium": "^0.18.1",
+    "react": "^15.3.2",
+    "react-icons": "^2.2.1",
+    "react-pure-render": "^1.0.2",
+    "react-router": "^2.8.1"
+  },
+  "devDependencies": {
+    "floflo-webpack-config": "^1.1.0",
+    "react-dom": "^15.3.2"
+  }
+}
