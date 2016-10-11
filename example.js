@@ -70,24 +70,16 @@ var NavBarPanelMenuExample = React.createClass({
         {type: "separator"}
       ],
       [
-        {type: "button", "name": "translation", "logo": "FaLanguage", color: "#5591f2", "onClick": this.onTranslationClick}
+        {type: "button", "name": "translation", "logo": "FaLanguage", color: "#5591f2", component: 'div', props: {style: {width: '10px', height: '10px', backgroundColor: 'red'}}}
       ]
     ]);
 
     var footerItems = fromJS([
-      {
-        "text": "Copyright 2016 The Search Of Happiness",
-        "logo": "FaCopyright"
-      },
-      {
-        "text": "All Rights Reserved"
-      },
-      {
-        "text": "Blog Policy",
-        "logo": "FaBook",
-        "url": "/policy"
-      }
+      {text: "Copyright 2016 The Search Of Happiness", logo: "FaCopyright"},
+      {text: "All Rights Reserved"},
+      {text: "Blog Policy", logo: "FaBook", url: "/policy"}
     ]);
+
     return (
       <StyleRoot>
         <NavBar rootHref="/" logo="https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png" boxShadow onMenuButtonClick={this.onMenuButtonClick} translationActive={true} navItems={socialMedias} backgroundColor="oldlace" color="brown" />

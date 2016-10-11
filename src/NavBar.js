@@ -58,7 +58,6 @@ var styles = {
       fontSize: '22px'
     }
   },
-
   logo_image: {
     boxSizing: 'border-box',
     padding: '5px 0',
@@ -73,7 +72,6 @@ var styles = {
     padding: 0,
     height: '100%'
   },
-
   item: {
     position: 'relative',
     display: 'inline-block',
@@ -88,8 +86,8 @@ var styles = {
       fontSize: '18px'
     }
   },
-
   item_link: {
+    position: 'relative',
     display: 'inline-block',
     verticalAlign: 'top',
     boxSizing: 'border-box',
@@ -106,6 +104,14 @@ var styles = {
     ':hover': {
       opacity: 0.6
     }
+  },
+  item_dropdown: {
+    position: 'absolute',
+    top: '100%',
+    right: 0,
+    display: 'none',
+    padding: '15px 20px 15px 20px',
+    lineHeight: 'normal'
   },
 
   separator: {
@@ -125,6 +131,19 @@ var styles = {
 var NavBar = React.createClass({
   mixins: [PureMixin],
 
+  componentWillMount: function () {
+    if (typeof document === 'object' && document.body) {
+      document.body.addEventListener('click', this.onBodyClick);
+    }
+
+    this.setState({activeItem: null});
+  },
+  componentWillUnmount: function () {
+    if (typeof document === 'object' && document.body) {
+      document.body.removeEventListener('click', this.onBodyClick);
+    }
+  },
+
   onMenuButtonClick: function (event) {
     if (typeof this.props.onMenuButtonClick === 'function') {
       this.props.onMenuButtonClick(event);
@@ -139,6 +158,43 @@ var NavBar = React.createClass({
   },
   getBoxShadow: function () {
     return this.props.boxShadow ? '0 1px 8px rgba(0,0,0,0.3)' : 'initial';
+  },
+
+  onBodyClick: function (event) {
+    if (this.state.activeItem) {
+      var activeElement = this.refs[this.state.activeItem + '-dropdown'];
+
+      if (activeElement && !activeElement.contains(event.target)) {
+        this.closeItemDropdown();
+      }
+    }
+  },
+  itemClick: function (item) {
+    var newActiveItem = item.get('name');
+
+    if (newActiveItem !== this.state.activeItem) {
+      this.openItemDropdown(newActiveItem);
+    }
+
+    if (typeof item.get('onClick') === 'function') {
+      item.get('onClick')();
+    }
+  },
+  closeItemDropdown: function () {
+    var self = this;
+
+    setTimeout(function () {
+      if (self.state.activeItem) {
+        self.setState({activeItem: null});
+      }
+    }, 1);
+  },
+  openItemDropdown: function (activeItem) {
+    var self = this;
+
+    setTimeout(function () {
+      self.setState({activeItem: activeItem});
+    }, 1);
   },
 
   render: function () {
@@ -201,19 +257,38 @@ var NavBar = React.createClass({
   },
 
   renderButton: function (item) {
+    var self = this;
+    var itemName = item.get('name');
+    var isActive = itemName === this.state.activeItem;
+    var hasComponent = !!item.get('component');
+    var backgroundColor = this.getBackgroundColor();
+    var boxShadow = this.getBoxShadow();
     var Icon = Icons[item.get('logo')];
     var style = {};
 
-    if (item.get('color')) {
-      style.color = item.get('color');
-    }
 
     if (Icon) {
+      if (item.get('color')) {
+        style.color = item.get('color');
+      }
+
+      if (hasComponent) {
+        var Component = item.get('component');
+        var props = item.get('props').toJS();
+      }
+
       return (
-        <li key={'nav-item-' + item.get('name')} style={styles.item}>
-          <button key={'nav-item-link-' + item.get('name')} style={[styles.item_link, style]} onClick={item.get('onClick')}>
+        <li ref={itemName} key={'nav-item-' + itemName} style={styles.item}>
+          <button key={'nav-item-link-' + item.get('name')} style={[styles.item_link, style]} onClickCapture={self.itemClick.bind(self, item)}>
             <Icon />
           </button>
+          {hasComponent
+            ? <div ref={itemName + '-dropdown'} style={[styles.item_dropdown, {backgroundColor: backgroundColor, boxShadow: boxShadow}, isActive ? {display: 'block'} : null]}>
+                <Component {...props} />
+              </div>
+            : null
+          }
+
         </li>
       );
     } else {
