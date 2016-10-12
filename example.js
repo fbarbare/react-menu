@@ -61,10 +61,10 @@ var NavBarPanelMenuExample = React.createClass({
     ]);
 
     return (
-      <StyleRoot>
+      <div>
         <NavBar rootHref="/" logo="My Site Name" onMenuButtonClick={this.onMenuButtonClick} navItems={socialMedias} color="brown" backgroundColor="oldlace" boxShadow />
         <PanelMenu ref="panelMenu" logo="My Logo" menuItems={categories} footerItems={footerItems} color="brown" backgroundColor="oldlace" boxShadow defaultOpen />
-      </StyleRoot>
+      </div>
     );
   }
 });

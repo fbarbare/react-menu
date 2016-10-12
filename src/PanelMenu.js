@@ -217,71 +217,73 @@ var PanelMenu = React.createClass({
 
     return (
       <section>
-        <div style={[styles.overlay, isActive ? styles.overlay_active : null]} onClick={this.closeMenu}></div>
-        <div style={[styles.container, {color: color, backgroundColor: backgroundColor}, isActive ? styles.container_active : null]}>
-          <div style={styles.panel}>
-            <div style={styles.header}>
-              <div style={styles.header_title_container}>
-                <LinkRadium className="notranslate" style={styles.header_title} to={rootHref} onClick={this.closeMenu}>
-                  {Logo}
-                </LinkRadium>
+        <StyleRoot>
+          <div style={[styles.overlay, isActive ? styles.overlay_active : null]} onClick={this.closeMenu}></div>
+          <div style={[styles.container, {color: color, backgroundColor: backgroundColor}, isActive ? styles.container_active : null]}>
+            <div style={styles.panel}>
+              <div style={styles.header}>
+                <div style={styles.header_title_container}>
+                  <LinkRadium className="notranslate" style={styles.header_title} to={rootHref} onClick={this.closeMenu}>
+                    {Logo}
+                  </LinkRadium>
+                </div>
+                <div style={styles.close_button_container}>
+                  <button style={styles.close_button} onClick={this.closeMenu}>
+                    <Icons.FaAngleLeft />
+                  </button>
+                </div>
               </div>
-              <div style={styles.close_button_container}>
-                <button style={styles.close_button} onClick={this.closeMenu}>
-                  <Icons.FaAngleLeft />
-                </button>
-              </div>
+              <div style={[styles.separator, {borderColor: colorLight}]}></div>
+              <ul style={styles.menu_items}>
+                {props.menuItems && props.menuItems.map(function (item, index) {
+                  var color = item.get('color') || this.getColor(),
+                      Icon = Icons[item.get('logo')];
+
+                  return (
+                    <li key={'menu-item-' + index} style={styles.menu_item}>
+                      <LinkRadium to={path.join(rootHref, item.get('url') || '')} style={[styles.menu_item_link, {':hover': {backgroundColor: colorLight}}, item.get('highlight') ? {color: color, backgroundColor: colorLight} : null]} activeStyle={{color: color, ':hover': {backgroundColor: colorLight}}} onClick={self.closeMenu} onlyActiveOnIndex>
+                        {Icon
+                          ? <span style={styles.menu_item_icon}>
+                              <Icon />
+                            </span>
+                          : null
+                        }
+                        <span style={styles.menu_item_title}>{item.get('text')}</span>
+                      </LinkRadium>
+                    </li>
+                  );
+                })}
+              </ul>
+              <ul style={styles.footer}>
+                {props.footerItems && props.footerItems.map(function (item, index) {
+                  var url = null,
+                      Container = 'div',
+                      isLink = !!item.get('url'),
+                      Icon = Icons[item.get('logo')];
+
+                  if (isLink) {
+                    url = path.join(rootHref, item.get('url'));
+                    Container = LinkRadium;
+                  }
+
+                  return (
+                    <li key={'menu-footer-item-' + index} style={styles.footer_item}>
+                      <Container style={[styles.footer_item_container, isLink ? styles.footer_item_container_link : null]}>
+                        {Icon
+                          ? <span style={styles.footer_item_icon_container}>
+                              <Icon style={styles.footer_item_icon} />
+                            </span>
+                          : null
+                        }
+                        <span style={styles.footer_item_text}>{item.get('text')}</span>
+                      </Container>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
-            <div style={[styles.separator, {borderColor: colorLight}]}></div>
-            <ul style={styles.menu_items}>
-              {props.menuItems && props.menuItems.map(function (item, index) {
-                var color = item.get('color') || this.getColor(),
-                    Icon = Icons[item.get('logo')];
-
-                return (
-                  <li key={'menu-item-' + index} style={styles.menu_item}>
-                    <LinkRadium to={path.join(rootHref, item.get('url') || '')} style={[styles.menu_item_link, {':hover': {backgroundColor: colorLight}}, item.get('highlight') ? {color: color, backgroundColor: colorLight} : null]} activeStyle={{color: color, ':hover': {backgroundColor: colorLight}}} onClick={self.closeMenu} onlyActiveOnIndex>
-                      {Icon
-                        ? <span style={styles.menu_item_icon}>
-                            <Icon />
-                          </span>
-                        : null
-                      }
-                      <span style={styles.menu_item_title}>{item.get('text')}</span>
-                    </LinkRadium>
-                  </li>
-                );
-              })}
-            </ul>
-            <ul style={styles.footer}>
-              {props.footerItems && props.footerItems.map(function (item, index) {
-                var url = null,
-                    Container = 'div',
-                    isLink = !!item.get('url'),
-                    Icon = Icons[item.get('logo')];
-
-                if (isLink) {
-                  url = path.join(rootHref, item.get('url'));
-                  Container = LinkRadium;
-                }
-
-                return (
-                  <li key={'menu-footer-item-' + index} style={styles.footer_item}>
-                    <Container style={[styles.footer_item_container, isLink ? styles.footer_item_container_link : null]}>
-                      {Icon
-                        ? <span style={styles.footer_item_icon_container}>
-                            <Icon style={styles.footer_item_icon} />
-                          </span>
-                        : null
-                      }
-                      <span style={styles.footer_item_text}>{item.get('text')}</span>
-                    </Container>
-                  </li>
-                );
-              })}
-            </ul>
           </div>
-        </div>
+        </StyleRoot>
       </section>
     );
   }

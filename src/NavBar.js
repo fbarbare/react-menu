@@ -1,12 +1,12 @@
 var path = require('path');
 var React = require('react');
+var Icons = require('react-icons/lib/fa');
+var PureMixin = require('react-pure-render/mixin');
 var Radium = require('radium');
+var StyleRoot = require('radium').StyleRoot;
 var Link = require('react-router').Link;
 var LinkRadium = Radium(Link);
 var isUrl = require('is-url');
-var StyleRoot = require('radium').StyleRoot;
-var PureMixin = require('react-pure-render/mixin');
-var Icons = require('react-icons/lib/fa');
 var colors = require('./stylesVariables').colors;
 
 var styles = {
@@ -217,31 +217,33 @@ var NavBar = React.createClass({
 
     return (
       <section>
-        <div ref="nav" style={[styles.nav, {color: color, backgroundColor: backgroundColor, boxShadow: boxShadow}]}>
-          <button style={styles.menu_button} onClick={self.onMenuButtonClick}>
-            <Icons.FaBars />
-          </button>
-          <LinkRadium className="notranslate" style={styles.logo} to={rootHref}>
-            {Logo}
-          </LinkRadium>
-          {props.navItems
-            ? <ul style={styles.items}>
-                {props.navItems.map(function (navItemGroup, index) {
-                  return navItemGroup.map(function (item) {
-                    switch (item.get('type')) {
-                      case 'button':
-                        return self.renderButton(item);
-                      case 'link':
-                        return self.renderLink(item);
-                      case 'separator':
-                        return self.renderSeparator(item);
-                    };
-                  });
-                })}
-              </ul>
-            : null
-          }
-        </div>
+        <StyleRoot>
+          <div ref="nav" style={[styles.nav, {color: color, backgroundColor: backgroundColor, boxShadow: boxShadow}]}>
+            <button style={styles.menu_button} onClick={self.onMenuButtonClick}>
+              <Icons.FaBars />
+            </button>
+            <LinkRadium className="notranslate" style={styles.logo} to={rootHref}>
+              {Logo}
+            </LinkRadium>
+            {props.navItems
+              ? <ul style={styles.items}>
+                  {props.navItems.map(function (navItemGroup, index) {
+                    return navItemGroup.map(function (item) {
+                      switch (item.get('type')) {
+                        case 'button':
+                          return self.renderButton(item);
+                        case 'link':
+                          return self.renderLink(item);
+                        case 'separator':
+                          return self.renderSeparator(item);
+                      };
+                    });
+                  })}
+                </ul>
+              : null
+            }
+          </div>
+        </StyleRoot>
       </section>
     )
   },
