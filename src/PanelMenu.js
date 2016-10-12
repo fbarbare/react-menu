@@ -1,6 +1,7 @@
 var path = require('path');
 var React = require('react');
 var Radium = require('radium');
+var fromJS = require('immutable').fromJS;
 var Link = require('react-router').Link;
 var LinkRadium = Radium(Link);
 var isUrl = require('is-url');
@@ -237,11 +238,15 @@ var PanelMenu = React.createClass({
               <ul style={styles.menu_items}>
                 {props.menuItems && props.menuItems.map(function (item, index) {
                   var color = item.get('color') || this.getColor(),
-                      Icon = Icons[item.get('logo')];
+                      Icon = Icons[item.get('logo')],
+                      linkStyle = fromJS(styles.menu_item_link)
+                                    .mergeDeep(fromJS({':hover': {backgroundColor: colorLight}}))
+                                    .mergeDeep(item.get('highlight') ? fromJS({backgroundColor: colorLight}) : null),
+                      linkActiveStyle = linkStyle.mergeDeep(fromJS({color: color}));
 
                   return (
                     <li key={'menu-item-' + index} style={styles.menu_item}>
-                      <LinkRadium to={path.join(rootHref, item.get('url') || '')} style={[styles.menu_item_link, {':hover': {backgroundColor: colorLight}}, item.get('highlight') ? {color: color, backgroundColor: colorLight} : null]} activeStyle={{color: color, ':hover': {backgroundColor: colorLight}}} onClick={self.closeMenu} onlyActiveOnIndex>
+                      <LinkRadium to={path.join(rootHref, item.get('url') || '')} style={linkStyle.toJS()} activeStyle={linkActiveStyle.toJS()} onClick={self.closeMenu} onlyActiveOnIndex>
                         {Icon
                           ? <span style={styles.menu_item_icon}>
                               <Icon />
@@ -256,19 +261,20 @@ var PanelMenu = React.createClass({
               </ul>
               <ul style={styles.footer}>
                 {props.footerItems && props.footerItems.map(function (item, index) {
-                  var url = null,
+                  var linkProperties = {},
                       Container = 'div',
                       isLink = !!item.get('url'),
                       Icon = Icons[item.get('logo')];
 
                   if (isLink) {
-                    url = path.join(rootHref, item.get('url'));
                     Container = LinkRadium;
+                    linkProperties.to = path.join(rootHref, item.get('url'));
+                    linkProperties.onClick = self.closeMenu;
                   }
 
                   return (
                     <li key={'menu-footer-item-' + index} style={styles.footer_item}>
-                      <Container style={[styles.footer_item_container, isLink ? styles.footer_item_container_link : null]}>
+                      <Container style={[styles.footer_item_container, isLink ? styles.footer_item_container_link : null]} {...linkProperties}>
                         {Icon
                           ? <span style={styles.footer_item_icon_container}>
                               <Icon style={styles.footer_item_icon} />
