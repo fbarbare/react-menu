@@ -274,7 +274,11 @@ var NavBar = React.createClass({
 
       if (hasComponent) {
         var Component = item.get('component');
-        var props = item.get('props').toJS();
+        var props = item.get('props');
+
+        if (props) {
+          props = props.toJS();
+        }
       }
 
       return (
