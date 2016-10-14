@@ -262,9 +262,7 @@ var NavBar = React.createClass({
     var self = this;
     var itemName = item.get('name');
     var isActive = itemName === this.state.activeItem;
-    var hasComponent = !!item.get('component');
-    var backgroundColor = this.getBackgroundColor();
-    var boxShadow = this.getBoxShadow();
+    var dropdown = item.get('dropdown');
     var Icon = Icons[item.get('logo')];
     var style = {};
 
@@ -274,9 +272,12 @@ var NavBar = React.createClass({
         style.color = item.get('color');
       }
 
-      if (hasComponent) {
-        var Component = item.get('component');
-        var props = item.get('props');
+      if (dropdown) {
+        var Component = dropdown.get('component');
+        var props = dropdown.get('props');
+        var color = dropdown.get('color') || this.getColor();
+        var backgroundColor = dropdown.get('backgroundColor') || this.getBackgroundColor();
+        var boxShadow = dropdown.get('boxShadow') || this.getBoxShadow();
 
         if (props) {
           props = props.toJS();
@@ -288,8 +289,8 @@ var NavBar = React.createClass({
           <button key={'nav-item-link-' + item.get('name')} style={[styles.item_link, style]} onClickCapture={self.itemClick.bind(self, item)}>
             <Icon />
           </button>
-          {hasComponent
-            ? <div ref={itemName + '-dropdown'} style={[styles.item_dropdown, {backgroundColor: backgroundColor, boxShadow: boxShadow}, isActive ? {display: 'block'} : null]}>
+          {dropdown
+            ? <div ref={itemName + '-dropdown'} style={[styles.item_dropdown, {color: color, backgroundColor: backgroundColor, boxShadow: boxShadow}, isActive ? {display: 'block'} : null]}>
                 <Component {...props} />
               </div>
             : null
