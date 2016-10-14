@@ -277,7 +277,7 @@ var NavBar = React.createClass({
         var props = dropdown.get('props');
         var color = dropdown.get('color') || this.getColor();
         var backgroundColor = dropdown.get('backgroundColor') || this.getBackgroundColor();
-        var boxShadow = dropdown.get('boxShadow') || this.getBoxShadow();
+        var boxShadow = this.getBoxShadow();
 
         if (props) {
           props = props.toJS();
