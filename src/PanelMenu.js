@@ -209,7 +209,7 @@ var PanelMenu = React.createClass({
     }
 
     if (typeof logo === 'function') {
-      Logo = props.logo;
+      Logo = <props.logo />;
     } else if (isUrl(logo)) {
       Logo = <img src={logo} style={styles.logo_image} />;
     } else {

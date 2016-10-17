@@ -201,18 +201,17 @@ var NavBar = React.createClass({
     var self = this,
         props = self.props,
         rootHref = props.rootHref || '/',
-        logo = props.logo || '',
-        Logo,
         color = self.getColor(),
         backgroundColor = self.getBackgroundColor(),
-        boxShadow = self.getBoxShadow();
+        boxShadow = self.getBoxShadow(),
+        logo;
 
-    if (typeof logo === 'function') {
-      Logo = props.logo;
-    } else if (isUrl(logo)) {
-      Logo = <img src={logo} style={styles.logo_image} />;
+    if (typeof props.logo === 'function') {
+      logo = <props.logo />;
+    } else if (isUrl(props.logo)) {
+      logo = <img src={props.logo} style={styles.logo_image} />;
     } else {
-      Logo = logo;
+      logo = props.logo;
     }
 
     return (
@@ -223,7 +222,7 @@ var NavBar = React.createClass({
               <Icons.FaBars />
             </button>
             <LinkRadium className="notranslate" style={styles.logo} to={rootHref}>
-              {Logo}
+              {logo}
             </LinkRadium>
             {props.navItems
               ? <ul style={styles.items}>
