@@ -198,13 +198,13 @@ var PanelMenu = React.createClass({
         isActive = false,
         props = self.props,
         rootHref = props.rootHref || '/',
-        logo = this.props.logo,
+        logo = self.props.logo,
         Logo,
-        color = this.getColor(),
-        colorLight = this.getColorLight(),
-        backgroundColor = this.getBackgroundColor();
+        color = self.getColor(),
+        colorLight = self.getColorLight(),
+        backgroundColor = self.getBackgroundColor();
 
-    if (this.state.active) {
+    if (self.state.active) {
       isActive = true;
     }
 
@@ -219,17 +219,17 @@ var PanelMenu = React.createClass({
     return (
       <section>
         <StyleRoot>
-          <div style={[styles.overlay, isActive ? styles.overlay_active : null]} onClick={this.closeMenu}></div>
+          <div style={[styles.overlay, isActive ? styles.overlay_active : null]} onClick={self.closeMenu}></div>
           <div style={[styles.container, {color: color, backgroundColor: backgroundColor}, isActive ? styles.container_active : null]}>
             <div style={styles.panel}>
               <div style={styles.header}>
                 <div style={styles.header_title_container}>
-                  <LinkRadium className="notranslate" style={styles.header_title} to={rootHref} onClick={this.closeMenu}>
+                  <LinkRadium className="notranslate" style={styles.header_title} to={rootHref} onClick={self.closeMenu}>
                     {Logo}
                   </LinkRadium>
                 </div>
                 <div style={styles.close_button_container}>
-                  <button style={styles.close_button} onClick={this.closeMenu}>
+                  <button style={styles.close_button} onClick={self.closeMenu}>
                     <Icons.FaAngleLeft />
                   </button>
                 </div>
@@ -237,11 +237,11 @@ var PanelMenu = React.createClass({
               <div style={[styles.separator, {borderColor: colorLight}]}></div>
               <ul style={styles.menu_items}>
                 {props.menuItems && props.menuItems.map(function (item, index) {
-                  var color = item.get('color') || this.getColor(),
+                  var color = item.get('color') || color,
                       Icon = Icons[item.get('logo')],
                       linkStyle = fromJS(styles.menu_item_link)
-                                    .mergeDeep(fromJS({':hover': {backgroundColor: colorLight}}))
-                                    .mergeDeep(item.get('highlight') ? fromJS({backgroundColor: colorLight}) : null),
+                        .mergeDeep(fromJS({':hover': {backgroundColor: colorLight}}))
+                        .mergeDeep(item.get('highlight') ? fromJS({backgroundColor: colorLight}) : null),
                       linkActiveStyle = linkStyle.mergeDeep(fromJS({color: color}));
 
                   return (
