@@ -237,12 +237,12 @@ var PanelMenu = React.createClass({
               <div style={[styles.separator, {borderColor: colorLight}]}></div>
               <ul style={styles.menu_items}>
                 {props.menuItems && props.menuItems.map(function (item, index) {
-                  var color = item.get('color') || color,
+                  var linkColor = item.get('color') || color,
                       Icon = Icons[item.get('logo')],
                       linkStyle = fromJS(styles.menu_item_link)
                         .mergeDeep(fromJS({':hover': {backgroundColor: colorLight}}))
                         .mergeDeep(item.get('highlight') ? fromJS({backgroundColor: colorLight}) : null),
-                      linkActiveStyle = linkStyle.mergeDeep(fromJS({color: color}));
+                      linkActiveStyle = linkStyle.mergeDeep(fromJS({color: linkColor}));
 
                   return (
                     <li key={'menu-item-' + index} style={styles.menu_item}>
