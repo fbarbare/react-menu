@@ -9,6 +9,8 @@ var LinkRadium = Radium(Link);
 var isUrl = require('is-url');
 var colors = require('./stylesVariables').colors;
 
+var height = '50px';
+
 var styles = {
   nav: {
     position: 'fixed',
@@ -18,7 +20,7 @@ var styles = {
     boxSizing: 'border-box',
     padding: '0 10px',
     width: '100%',
-    height: '50px',
+    height: height,
     lineHeight: '50px',
     transition: '.1s 0s ease-in-out'
   },
@@ -215,7 +217,7 @@ var NavBar = React.createClass({
     }
 
     return (
-      <section>
+      <section style={!props.overflowSite ? {height} : null}>
         <StyleRoot>
           <div ref="nav" style={[styles.nav, {color: color, backgroundColor: backgroundColor, boxShadow: boxShadow}]}>
             <button style={styles.menu_button} onClick={self.onMenuButtonClick}>
