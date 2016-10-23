@@ -65,7 +65,7 @@ var styles = {
   header_title: {
     fontSize: '24px',
     textDecoration: 'none',
-    fontFamily: 'logo-font',
+    fontFamily: 'inherit',
     color: 'inherit',
     cursor: 'pointer'
   },
@@ -119,7 +119,7 @@ var styles = {
   },
   menu_item_title: {
     verticalAlign: 'middle',
-    fontFamily: 'emphasis-font',
+    fontFamily: 'inherit',
     fontSize: '14px',
     fontWeight: '500'
   },
@@ -156,7 +156,7 @@ var styles = {
   footer_item_text: {
     marginLeft: '2px',
     padding: '0',
-    fontFamily: 'emphasis-font'
+    fontFamily: 'inherit'
   },
 
 };
