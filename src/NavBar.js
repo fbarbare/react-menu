@@ -202,7 +202,6 @@ var NavBar = React.createClass({
   render: function () {
     var self = this,
         props = self.props,
-        rootHref = props.rootHref || '/',
         color = self.getColor(),
         backgroundColor = self.getBackgroundColor(),
         boxShadow = self.getBoxShadow(),
@@ -220,10 +219,12 @@ var NavBar = React.createClass({
       <section style={!props.overflowSite ? {height} : null}>
         <StyleRoot>
           <div ref="nav" style={[styles.nav, {color: color, backgroundColor: backgroundColor, boxShadow: boxShadow}]}>
-            <button style={styles.menu_button} onClick={self.onMenuButtonClick}>
-              <Icons.FaBars />
-            </button>
-            <LinkRadium className="notranslate" style={styles.logo} to={rootHref}>
+            {props.menuButtonActive !=== false
+              <button style={styles.menu_button} onClick={self.onMenuButtonClick}>
+                <Icons.FaBars />
+              </button>
+            }
+            <LinkRadium className="notranslate" style={styles.logo} to={props.rootHref || '/'}>
               {logo}
             </LinkRadium>
             {props.navItems

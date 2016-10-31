@@ -1,6 +1,6 @@
 {
   "name": "floflo-react-menu",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Some input components all styled and ready to use",
   "main": "./dst/index.js",
   "scripts": {
