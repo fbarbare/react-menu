@@ -220,9 +220,10 @@ var NavBar = React.createClass({
         <StyleRoot>
           <div ref="nav" style={[styles.nav, {color: color, backgroundColor: backgroundColor, boxShadow: boxShadow}]}>
             {props.menuButtonActive !== false
-              <button style={styles.menu_button} onClick={self.onMenuButtonClick}>
-                <Icons.FaBars />
-              </button>
+              ? <button style={styles.menu_button} onClick={self.onMenuButtonClick}>
+                  <Icons.FaBars />
+                </button>
+              : null
             }
             <LinkRadium className="notranslate" style={styles.logo} to={props.rootHref || '/'}>
               {logo}
