@@ -219,7 +219,7 @@ var NavBar = React.createClass({
       <section style={!props.overflowSite ? {height} : null}>
         <StyleRoot>
           <div ref="nav" style={[styles.nav, {color: color, backgroundColor: backgroundColor, boxShadow: boxShadow}]}>
-            {props.menuButtonActive !=== false
+            {props.menuButtonActive !== false
               <button style={styles.menu_button} onClick={self.onMenuButtonClick}>
                 <Icons.FaBars />
               </button>
